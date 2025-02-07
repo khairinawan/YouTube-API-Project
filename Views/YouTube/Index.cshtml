@@ -1,0 +1,92 @@
+﻿@model List<YouTubeApiProject.Models.YouTubeVideoModel>
+
+@{
+    ViewData["Title"] = "Search YouTube Videos";
+}
+
+<div class="container">
+    <h2 class="text-light text-center">Search YouTube Videos</h2>
+
+    <!-- Search Form -->
+    <form asp-action="Search" method="post" class="d-flex justify-content-center my-3">
+        <input type="text" name="query" class="form-control w-50" placeholder="Search YouTube..." required />
+
+        <!-- Video Duration Filter -->
+        <select name="duration" class="form-select mx-2">
+            <option value="">All Durations</option>
+            <option value="short">Short (< 4 min)</option>
+            <option value="medium">Medium (4-20 min)</option>
+            <option value="long">Long (> 20 min)</option>
+        </select>
+
+        <!-- Upload Date Filter -->
+        <select name="uploadDate" class="form-select mx-2">
+            <option value="">Any Time</option>
+            <option value="today">Today</option>
+            <option value="week">This Week</option>
+            <option value="month">This Month</option>
+        </select>
+
+        <button type="submit" class="btn btn-danger"><i class="fas fa-search"></i> Search</button>
+    </form>
+
+    <!-- Only show results if a search was performed -->
+    @if (Model != null && ViewBag.Query != null)
+    {
+        if (Model.Any())
+        {
+            <!-- Video Grid -->
+            <div class="row">
+                @foreach (var video in Model)
+                {
+                    <div class="col-md-4 col-lg-3 mb-4">
+                        <div class="card bg-dark text-light border-0 video-card">
+                            <img src="@video.ThumbnailUrl" class="card-img-top" alt="@video.Title">
+                            <div class="card-body">
+                                <h6 class="card-title text-truncate">@video.Title</h6>
+                                <p class="text-secondary mb-1"><small>Channel: @video.ChannelName</small></p>
+                                <p class="text-secondary mb-1"><small>Published: @video.PublishedDate</small></p>
+                                <p class="text-secondary mb-1"><small>Duration: @video.Duration</small></p>
+                                <p class="card-text text-truncate text-secondary">@video.Description</p>
+
+                                <!-- Watch Button -->
+                                <a href="@video.VideoUrl" target="_blank" class="btn btn-outline-danger w-100">
+                                    <i class="fas fa-play"></i> Watch
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Pagination Button -->
+            @if (!string.IsNullOrEmpty(ViewBag.NextPageToken))
+            {
+                <form asp-action="Search" method="post" class="text-center mt-3">
+                    <input type="hidden" name="query" value="@ViewBag.Query" />
+                    <input type="hidden" name="duration" value="@ViewBag.Duration" />
+                    <input type="hidden" name="uploadDate" value="@ViewBag.UploadDate" />
+                    <input type="hidden" name="pageToken" value="@ViewBag.NextPageToken" />
+
+                    <button type="submit" class="btn btn-outline-light">
+                        Next Page <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+            }
+        }
+        else
+        {
+            <p class="text-center text-warning">No results found. Try another search.</p>
+        }
+    }
+</div>
+
+
+
+
+
+
+
+
+
+

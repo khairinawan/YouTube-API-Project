@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Home - YouTube ";
+}
+
+<div class="container text-center">
+    <h1 class="text-danger"><i class="fab fa-youtube"></i> YouTube </h1>
+    <p class="lead text-light mt-3 text-justify">
+        Welcome to YouTube, a web application designed to provide a seamless YouTube video search experience using the YouTube API.
+        This application allows users to search for YouTube videos, apply advanced filters such as video duration and upload date,
+        and navigate results with a pagination system. The user interface is designed to resemble the real YouTube experience,
+        making video browsing familiar and intuitive.
+    </p>
+
+    <p class="text-light text-justify">
+        Our application is built using ASP.NET Core MVC, integrated with the YouTube API,
+        and styled with Bootstrap for a modern and responsive design. Whether you're looking for music, tutorials,
+        or trending content, this platform makes it easy to find and watch videos directly on YouTube.
+    </p>
+
+
+    <!-- Interactive Start Button -->
+    <a class="btn btn-danger btn-lg mt-4 animated-button" asp-controller="YouTube" asp-action="Index">
+        <i class="fas fa-search"></i> Start Searching Now
+    </a>
+
+    <!-- Additional Information -->
+    <div class="mt-5">
+        <h4 class="text-light">🔥 Trending Topics</h4>
+        <p class="text-secondary">Try searching for Music, Gaming, Technology, Tutorials, and more!</p>
+    </div>
+</div>
+
+
+
